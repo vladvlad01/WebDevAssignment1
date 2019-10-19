@@ -1,10 +1,7 @@
 package entities;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -18,6 +15,9 @@ public class Ticket {
     private String destination;
     private String seat;
     private Date date;
+
+    @ManyToOne
+    private Passenger passenger;
 
     public Ticket() {
     }
@@ -67,5 +67,13 @@ public class Ticket {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public Passenger getPassenger() {
+        return passenger;
+    }
+
+    public void setPassenger(Passenger passenger) {
+        this.passenger = passenger;
     }
 }
