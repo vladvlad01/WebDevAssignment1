@@ -16,44 +16,32 @@ public class MainActivity {
         Passport passport = new Passport("Vlad", "Ciobanu", "Romanian", "PS123");
         Passport passport1 = new Passport("Daniels", "Goods", "Irish", "PS321");
         Passport passport2 = new Passport("Mike", "Summers", "English", "PS432");
+        Passport passport3 = new Passport("Asds", "Trewr", "DSAdas", "PS430");
+        Passport passport4 = new Passport("asdasdas", "fasdas", "asdasd", "PS670");
         passportDAO.persistPassport(passport);
         passportDAO.persistPassport(passport1);
         passportDAO.persistPassport(passport2);
+        passportDAO.persistPassport(passport3);
+        passportDAO.persistPassport(passport4);
 
-        for(Passport p : passportDAO.getAllPassports()){
-            System.out.println("Last name: "+p.getLastName());
-            System.out.println("First name: "+p.getFirstName());
-            System.out.println("Nationality: "+p.getNationality());
-            System.out.println("Passport Number: "+p.getPassportNumber());
-            System.out.println("=========================================");
-        }
-
+        viewPassports();
         passportDAO.removePassport(passport);
         System.out.println("=========================================");
-
-        for(Passport p : passportDAO.getAllPassports()){
-            System.out.println("Last name: "+p.getLastName());
-            System.out.println("First name: "+p.getFirstName());
-            System.out.println("Nationality: "+p.getNationality());
-            System.out.println("Passport Number: "+p.getPassportNumber());
-            System.out.println("=========================================");
-        }
-
+        viewPassports();
         passportDAO.mergePassport(passport1);
 
 
-
-
-
-        //passportDAO.removePassport(p2);
-
-//        PassengerDAO passengerDAO = new PassengerDAO();
-//        Passenger passenger = new Passenger("The Maltings", "vlad@mail.com", "0877116150", passport);
-//        Passenger passenger1 = new Passenger("4 Woodofrd", "mike@mail.com", "0877116152", passport1);
-//        Passenger passenger2 = new Passenger("5 Woodofrd", "john@mail.com", "0877116151", passport2);
-//        passengerDAO.persistPassenger(passenger);
-//        passengerDAO.persistPassenger(passenger1);
-//        passengerDAO.persistPassenger(passenger2);
+        PassengerDAO passengerDAO = new PassengerDAO();
+        Passenger passenger = new Passenger("The Maltings", "vlad@mail.com", "0877116150", passport1);
+        Passenger passenger1 = new Passenger("4 Woodofrd", "mike@mail.com", "0877116152", passport2);
+        Passenger passenger2 = new Passenger("Viker Street", "john@mail.com", "0877116151", passport3);
+        Passenger passenger3 = new Passenger("Vilnius Street", "mike@mail.com", "08771123151", passport4);
+        Passenger passenger4 = new Passenger("Sas Street", "dsds@mail.com", "087756598", passport4);
+        passengerDAO.persistPassenger(passenger);
+        passengerDAO.persistPassenger(passenger1);
+        passengerDAO.persistPassenger(passenger2);
+        passengerDAO.persistPassenger(passenger3);
+        passengerDAO.persistPassenger(passenger4);
 //
 //        TicketDAO ticketDAO = new TicketDAO();
 //        Ticket ticket = new Ticket("Dublin", "Cork", "1A", passenger);
@@ -77,6 +65,23 @@ public class MainActivity {
 //        flightDAO.persistFlight(flight);
 //        flightDAO.persistFlight(flight1);
 
+    }
+
+    public void viewPassengers(){
+        PassengerDAO passengerDAO = new PassengerDAO();
+
+        //for(Passenger p : passengerDAO.)
+    }
+
+    public void viewPassports(){
+        PassportDAO passportDAO = new PassportDAO();
+        for(Passport p : passportDAO.getAllPassports()){
+            System.out.println("Last name: "+p.getLastName());
+            System.out.println("First name: "+p.getFirstName());
+            System.out.println("Nationality: "+p.getNationality());
+            System.out.println("Passport Number: "+p.getPassportNumber());
+            System.out.println("=========================================");
+        }
     }
 
     public static void main(String args[]){

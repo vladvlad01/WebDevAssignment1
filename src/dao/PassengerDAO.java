@@ -5,6 +5,7 @@ import entities.Passenger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import java.util.List;
 
 public class PassengerDAO {
 
@@ -18,6 +19,15 @@ public class PassengerDAO {
 
         entityManager.getTransaction().commit();
         entityManager.close();
+    }
+
+    public List<Passenger> getAllPassports(){
+
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+        List<Passenger> passports = (List<Passenger>) entityManager.createNamedQuery("Passport.findAllOrderedByLastName").getResultList();
+        entityManager.close();
+        return passports;
     }
 }
 

@@ -3,6 +3,11 @@ package entities;
 import javax.persistence.*;
 import java.util.*;
 
+@NamedQueries({
+        @NamedQuery(name = "Passenger.findAll",     query = "select p from Passenger p"),
+        @NamedQuery(name = "Passenger.findByEmail", query = "select p from Passenger p where p.email = :email"),
+})
+
 @Entity
 public class Passenger {
 
@@ -32,9 +37,9 @@ public class Passenger {
         this.passport = passport;
     }
 
-//    public void addTicket(Ticket ticket){
-//        tickets.add(ticket);
-//    }
+    public void addTicket(Ticket ticket){
+        tickets.add(ticket);
+    }
 
     public int getId() {
         return id;
