@@ -14,20 +14,29 @@ public class PassengerDAO {
     public void persistPassenger(Passenger passenger){
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
-
+        System.out.println("");
         entityManager.persist(passenger);
 
         entityManager.getTransaction().commit();
         entityManager.close();
     }
 
-    public List<Passenger> getAllPassports(){
+    public List<Passenger> getAllPassengers(){
 
         EntityManager entityManager = entityManagerFactory.createEntityManager();
 
-        List<Passenger> passports = (List<Passenger>) entityManager.createNamedQuery("Passport.findAllOrderedByLastName").getResultList();
+        List<Passenger> passports = (List<Passenger>) entityManager.createNamedQuery("Passenger.findAll").getResultList();
         entityManager.close();
         return passports;
+    }
+
+    public void removePassenger(Passenger passenger){
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+        System.out.println();
+        entityManager.remove(entityManager.merge(passenger));
+        entityManager.getTransaction().commit();
+        entityManager.close();
     }
 }
 

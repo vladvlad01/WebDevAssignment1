@@ -35,13 +35,19 @@ public class MainActivity {
         Passenger passenger = new Passenger("The Maltings", "vlad@mail.com", "0877116150", passport1);
         Passenger passenger1 = new Passenger("4 Woodofrd", "mike@mail.com", "0877116152", passport2);
         Passenger passenger2 = new Passenger("Viker Street", "john@mail.com", "0877116151", passport3);
-        Passenger passenger3 = new Passenger("Vilnius Street", "mike@mail.com", "08771123151", passport4);
+        Passenger passenger3 = new Passenger("Vilnius Street", "mike1@mail.com", "08771123151", passport4);
         Passenger passenger4 = new Passenger("Sas Street", "dsds@mail.com", "087756598", passport4);
         passengerDAO.persistPassenger(passenger);
         passengerDAO.persistPassenger(passenger1);
         passengerDAO.persistPassenger(passenger2);
         passengerDAO.persistPassenger(passenger3);
         passengerDAO.persistPassenger(passenger4);
+
+        viewPassengers();
+        passengerDAO.removePassenger(passenger);
+        System.out.println("=========================================");
+        viewPassengers();
+
 //
 //        TicketDAO ticketDAO = new TicketDAO();
 //        Ticket ticket = new Ticket("Dublin", "Cork", "1A", passenger);
@@ -70,16 +76,16 @@ public class MainActivity {
     public void viewPassengers(){
         PassengerDAO passengerDAO = new PassengerDAO();
 
-        //for(Passenger p : passengerDAO.)
+        for(Passenger p : passengerDAO.getAllPassengers()){
+            System.out.println("PASSENGER: "+p.toString());
+            System.out.println("=========================================");
+        }
     }
 
     public void viewPassports(){
         PassportDAO passportDAO = new PassportDAO();
         for(Passport p : passportDAO.getAllPassports()){
-            System.out.println("Last name: "+p.getLastName());
-            System.out.println("First name: "+p.getFirstName());
-            System.out.println("Nationality: "+p.getNationality());
-            System.out.println("Passport Number: "+p.getPassportNumber());
+            System.out.println("PASSPORT"+p.toString());
             System.out.println("=========================================");
         }
     }

@@ -97,4 +97,14 @@ public class Passenger {
         this.flights = flights;
     }
 
+    @Override
+    public String toString() {
+        return "Passenger{" +
+                "id=" + id +
+                ", address='" + address + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", passport=" + passport +
+                '}';
+    }
 }
