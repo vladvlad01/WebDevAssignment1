@@ -1,10 +1,13 @@
 package entities;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+
+@NamedQueries({
+        @NamedQuery(name = "Flight.findAll",                        query = "select f from Flight f"),
+        @NamedQuery(name = "Flight.findByFlightNumber",              query = "select f from Flight f where f.flightNumber = :flightNumber"),
+        @NamedQuery(name = "Flight.findAllOrderedByTotalSeats",    query = "SELECT f FROM Flight f ORDER BY f.totalSeats")
+})
 
 @Entity
 public class Flight {
@@ -14,7 +17,7 @@ public class Flight {
     public int id;
 
     private String destination;
-    private int totalSeats;
+    private String totalSeats;
     private String flightNumber;
     private String airlane;
 
@@ -28,7 +31,7 @@ public class Flight {
 
     public Flight() {}
 
-    public Flight(String destination, int totalSeats, String flightNumber, String airlane) {
+    public Flight(String destination, String totalSeats, String flightNumber, String airlane) {
         this.destination = destination;
         this.totalSeats = totalSeats;
         this.flightNumber = flightNumber;
@@ -51,11 +54,11 @@ public class Flight {
         this.destination = destination;
     }
 
-    public int getTotalSeats() {
+    public String getTotalSeats() {
         return totalSeats;
     }
 
-    public void setTotalSeats(int totalSeats) {
+    public void setTotalSeats(String totalSeats) {
         this.totalSeats = totalSeats;
     }
 

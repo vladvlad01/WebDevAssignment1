@@ -1,10 +1,7 @@
 package entities;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 public class Passenger {
@@ -16,11 +13,12 @@ public class Passenger {
     private String address;
     private String email;
     private String phoneNumber;
-    @OneToOne
+
+    @OneToOne(cascade=CascadeType.REMOVE)
     private Passport passport;
 
-    @OneToMany
-    private List<Ticket> tickets = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Ticket> tickets = new ArrayList<Ticket>();
 
     @ManyToMany(mappedBy = "passengers")
     private Set<Flight> flights = new HashSet<>();
@@ -34,17 +32,9 @@ public class Passenger {
         this.passport = passport;
     }
 
-    public Passenger(String address, String email, String phoneNumber, Passport passport, List<Ticket> tickets) {
-        this.address = address;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.passport = passport;
-        this.tickets = tickets;
-    }
-
-    public void addTicket(Ticket ticket){
-        tickets.add(ticket);
-    }
+//    public void addTicket(Ticket ticket){
+//        tickets.add(ticket);
+//    }
 
     public int getId() {
         return id;
@@ -100,11 +90,6 @@ public class Passenger {
 
     public void setFlights(Set<Flight> flights) {
         this.flights = flights;
-    }
-
-    public void addFlight(Flight flight){
-        flights.add(flight);
-        flight.getPassengers().add(this);
     }
 
 }

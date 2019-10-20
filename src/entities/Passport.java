@@ -1,9 +1,12 @@
 package entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+
+@NamedQueries({
+        @NamedQuery(name = "Passport.findAll",                  query = "select p from Passport p"),
+        @NamedQuery(name = "Passport.findByPassportNumber",     query = "select p from Passport p where p.passportNumber = :passportNumber"),
+        @NamedQuery(name = "Passport.findAllOrderedByLastName", query = "SELECT p FROM Passport p ORDER BY p.lastName")
+})
 
 @Entity
 public class Passport {
@@ -16,9 +19,7 @@ public class Passport {
     private String nationality;
     private String passportNumber;
 
-    public Passport(){
-
-    }
+    public Passport(){}
 
     public Passport(String firstName, String lastName, String nationality, String passportNumber) {
         this.firstName = firstName;
@@ -65,5 +66,16 @@ public class Passport {
 
     public void setPassportNumber(String passportNumber) {
         this.passportNumber = passportNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "Passport{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", nationality='" + nationality + '\'' +
+                ", passportNumber='" + passportNumber + '\'' +
+                '}';
     }
 }

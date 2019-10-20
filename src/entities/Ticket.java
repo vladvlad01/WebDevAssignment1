@@ -1,8 +1,13 @@
 package entities;
 
-
 import javax.persistence.*;
 import java.util.Date;
+
+@NamedQueries({
+        @NamedQuery(name = "Ticket.findAll", query = "select t from Ticket t"),
+        @NamedQuery(name ="Ticket.findByDestination", query = "select t from Ticket t where t.destination = :destination"),
+        @NamedQuery(name = "Ticket.findAllOrderedByDestination", query = "SELECT t FROM Ticket t ORDER BY t.destination")
+})
 
 @Entity
 public class Ticket {
@@ -14,9 +19,9 @@ public class Ticket {
     private String origin;
     private String destination;
     private String seat;
-    private Date date;
 
     @ManyToOne
+    @JoinColumn(name = "passenger_id")
     private Passenger passenger;
 
     public Ticket() {
@@ -26,7 +31,13 @@ public class Ticket {
         this.origin = origin;
         this.destination = destination;
         this.seat = seat;
-        this.date = date;
+    }
+
+    public Ticket(String origin, String destination, String seat, Passenger passenger) {
+        this.origin = origin;
+        this.destination = destination;
+        this.seat = seat;
+        this.passenger = passenger;
     }
 
     public int getId() {
@@ -59,14 +70,6 @@ public class Ticket {
 
     public void setSeat(String seat) {
         this.seat = seat;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
     }
 
     public Passenger getPassenger() {

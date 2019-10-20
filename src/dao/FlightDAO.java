@@ -20,6 +20,30 @@ public class FlightDAO {
         entityManager.close();
     }
 
+    public Flight getFlight(String flightNumber){
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+
+        Flight flight = (Flight) entityManager.createNamedQuery("Flight.findByFlightNumber").setParameter("flightNumber", flightNumber).getSingleResult();
+        if(!flight.getFlightNumber().equals(flightNumber)){
+            return null;
+        }
+        return flight;
+    }
+
+    public void mergeFlight(Flight flight, String flightNumber){
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+
+        flight = (Flight) entityManager.createNamedQuery("Flight.findByFlightNumber").setParameter("flightNumber", flightNumber).getSingleResult();
+
+        entityManager.detach(flight);
+        entityManager.getTransaction().begin();
+        entityManager.merge(flight);
+        entityManager.getTransaction().commit();
+        entityManager.close();
+    }
+
 
 
 }

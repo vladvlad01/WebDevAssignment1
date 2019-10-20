@@ -1,53 +1,59 @@
 package dao;
-import entities.Passport;
+
+import entities.Ticket;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import java.util.List;
+import java.util.HashSet;
 
-public class PassportDAO {
-
+public class ServiceDAO {
     protected static EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("unit");
 
-    public void persistPassport(Passport passport){
+    public void persistObject(Object object){
+
         EntityManager entityManager = entityManagerFactory.createEntityManager();
+
         entityManager.getTransaction().begin();
-        entityManager.persist(passport);
+
+        entityManager.persist(object);
+
         entityManager.getTransaction().commit();
         entityManager.close();
     }
 
-    public List<Passport> getAllPassports(){
+    public HashSet<Object> getAllObjects(){
 
         EntityManager entityManager = entityManagerFactory.createEntityManager();
 
-        List<Passport> passports = (List<Passport>) entityManager.createNamedQuery("Passport.findAllOrderedByLastName").getResultList();
+        HashSet<Object> objects = (HashSet<Object>) entityManager.createNamedQuery("Ticket.findAllOrderedByDestination").getResultList();
         entityManager.close();
-        return passports;
+        return objects;
     }
 
-    public void mergePassport(Passport passport){
+    public Object mergeObject(Object object){
 
         EntityManager entityManager = entityManagerFactory.createEntityManager();
 
-        passport = (Passport) entityManager.createNamedQuery("Passport.findByPassportNumber").setParameter("passportNumber", "PS321").getSingleResult();
+        object = (Object) entityManager.createNamedQuery("Ticket.findByDestination").setParameter("destination", "London").getSingleResult();
 
-        entityManager.detach(passport);
-        passport.setPassportNumber("PS000");
+        entityManager.detach(object);
+
         entityManager.getTransaction().begin();
-        entityManager.merge(passport);
-        System.out.println("Your passport number was successfuly updated to: "+passport.getPassportNumber());
+        entityManager.merge(object);
+        entityManager.getTransaction().commit();
+        entityManager.close();
+        return object;
+    }
+
+    public void removeObject(Object Object){
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+
+        entityManager.remove(entityManager.merge(Object));
         entityManager.getTransaction().commit();
         entityManager.close();
     }
 
-    public void removePassport(Passport passport){
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        entityManager.getTransaction().begin();
 
-        entityManager.remove(entityManager.merge(passport));
-        System.out.println(passport.toString() + " was removed!");
-        entityManager.getTransaction().commit();
-        entityManager.close();
-    }
 }
