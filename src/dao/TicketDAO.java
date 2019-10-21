@@ -16,43 +16,38 @@ public class TicketDAO {
     public void persistTicket(Ticket ticket){
 
         EntityManager entityManager = entityManagerFactory.createEntityManager();
-
         entityManager.getTransaction().begin();
-
         entityManager.persist(ticket);
-
+        System.out.println();
         entityManager.getTransaction().commit();
         entityManager.close();
     }
 
-    public HashSet<Ticket> getAllTickets(){
+    public List<Ticket> getAllTickets(){
 
         EntityManager entityManager = entityManagerFactory.createEntityManager();
 
-        HashSet<Ticket> tickets = (HashSet<Ticket>) entityManager.createNamedQuery("Ticket.findAllOrderedByDestination").getResultList();
+        List<Ticket> tickets = (List<Ticket>) entityManager.createNamedQuery("Ticket.findAllOrderedByDestination").getResultList();
         entityManager.close();
         return tickets;
     }
 
-    public void mergeTicket(Ticket ticket){
+    public void mergeTicket(Ticket ticketToUpdate){
 
         EntityManager entityManager = entityManagerFactory.createEntityManager();
-
-        ticket = (Ticket) entityManager.createNamedQuery("Ticket.findByDestination").setParameter("destination", "London").getSingleResult();
-
-        entityManager.detach(ticket);
-        ticket.setDestination("Dublin");
         entityManager.getTransaction().begin();
-        entityManager.merge(ticket);
+        entityManager.merge(ticketToUpdate);
+        System.out.println("Updated to: "+ticketToUpdate.toString());
         entityManager.getTransaction().commit();
         entityManager.close();
     }
 
-    public void removeTicket(Ticket ticket){
+    public void removeTicket(Ticket ticketToRemove){
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
 
-        entityManager.remove(entityManager.merge(ticket));
+        entityManager.remove(entityManager.merge(ticketToRemove));
+        System.out.println(ticketToRemove.toString()+" was successfully removed");
         entityManager.getTransaction().commit();
         entityManager.close();
     }

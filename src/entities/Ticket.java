@@ -5,7 +5,7 @@ import java.util.Date;
 
 @NamedQueries({
         @NamedQuery(name = "Ticket.findAll", query = "select t from Ticket t"),
-        @NamedQuery(name ="Ticket.findByDestination", query = "select t from Ticket t where t.destination = :destination"),
+        @NamedQuery(name = "Ticket.findByDestination", query = "select t from Ticket t where t.destination = :destination"),
         @NamedQuery(name = "Ticket.findAllOrderedByDestination", query = "SELECT t FROM Ticket t ORDER BY t.destination")
 })
 
@@ -27,7 +27,7 @@ public class Ticket {
     public Ticket() {
     }
 
-    public Ticket(String origin, String destination, String seat, Date date) {
+    public Ticket(String origin, String destination, String seat) {
         this.origin = origin;
         this.destination = destination;
         this.seat = seat;
@@ -78,5 +78,16 @@ public class Ticket {
 
     public void setPassenger(Passenger passenger) {
         this.passenger = passenger;
+    }
+
+    @Override
+    public String toString() {
+        return "Ticket{" +
+                "id=" + id +
+                ", origin='" + origin + '\'' +
+                ", destination='" + destination + '\'' +
+                ", seat='" + seat + '\'' +
+                ", passenger=" + passenger +
+                '}';
     }
 }

@@ -1,59 +1,67 @@
-package dao;
-
-import entities.Ticket;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import java.util.HashSet;
-
-public class ServiceDAO {
-    protected static EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("unit");
-
-    public void persistObject(Object object){
-
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-
-        entityManager.getTransaction().begin();
-
-        entityManager.persist(object);
-
-        entityManager.getTransaction().commit();
-        entityManager.close();
-    }
-
-    public HashSet<Object> getAllObjects(){
-
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-
-        HashSet<Object> objects = (HashSet<Object>) entityManager.createNamedQuery("Ticket.findAllOrderedByDestination").getResultList();
-        entityManager.close();
-        return objects;
-    }
-
-    public Object mergeObject(Object object){
-
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-
-        object = (Object) entityManager.createNamedQuery("Ticket.findByDestination").setParameter("destination", "London").getSingleResult();
-
-        entityManager.detach(object);
-
-        entityManager.getTransaction().begin();
-        entityManager.merge(object);
-        entityManager.getTransaction().commit();
-        entityManager.close();
-        return object;
-    }
-
-    public void removeObject(Object Object){
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        entityManager.getTransaction().begin();
-
-        entityManager.remove(entityManager.merge(Object));
-        entityManager.getTransaction().commit();
-        entityManager.close();
-    }
-
-
-}
+//package dao;
+//
+//import entities.Passport;
+//import entities.Ticket;
+//
+//import javax.persistence.EntityManager;
+//import javax.persistence.EntityManagerFactory;
+//import javax.persistence.Persistence;
+//import java.util.HashSet;
+//import java.util.List;
+//
+//public class ServiceDAO {
+//    protected static EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("unit");
+//    private EntityManager entityManager = entityManagerFactory.createEntityManager();
+//
+//    public void save(Object object){
+//
+//        entityManager.getTransaction().begin();
+//
+//        entityManager.persist(object);
+//
+//        entityManager.getTransaction().commit();
+//        entityManager.close();
+//    }
+//
+//    public List<Object> getAllObjects(String query){
+//
+//        EntityManager entityManager = entityManagerFactory.createEntityManager();
+//
+//        List<Object> objects = (List<Object>) entityManager.createNamedQuery(query).getResultList();
+//
+//        entityManager.close();
+//        return objects;
+//    }
+//
+//
+//    public void update(Object objectToUpdate){
+//
+//        EntityManager entityManager = entityManagerFactory.createEntityManager();
+//
+//        entityManager.getTransaction().begin();
+//        entityManager.merge(objectToUpdate);
+//        entityManager.getTransaction().commit();
+//        entityManager.close();
+//
+//
+//    }
+//
+//    public void delete(Object Object){
+//        EntityManager entityManager = entityManagerFactory.createEntityManager();
+//        entityManager.getTransaction().begin();
+//
+//        entityManager.remove(entityManager.merge(Object));
+//        entityManager.getTransaction().commit();
+//        entityManager.close();
+//    }
+//
+//    public void test(){
+//        List<Passport> passports = (List) getAllObjects("test");
+//        passports.forEach(p ->{
+//            if(p.getPassportNumber().equalsIgnoreCase("p124")){
+//                p.setFirstName("Edit");
+//                update(p);
+//            }
+//        });
+//    }
+//}

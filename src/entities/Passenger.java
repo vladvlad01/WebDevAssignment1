@@ -19,7 +19,7 @@ public class Passenger {
     private String email;
     private String phoneNumber;
 
-    @OneToOne(cascade=CascadeType.REMOVE)
+    @OneToOne(cascade = CascadeType.REMOVE)
     private Passport passport;
 
     @OneToMany(cascade = CascadeType.ALL)

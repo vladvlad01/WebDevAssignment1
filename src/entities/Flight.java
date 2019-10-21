@@ -1,5 +1,7 @@
 package entities;
 
+import com.sun.org.apache.bcel.internal.generic.CASTORE;
+
 import javax.persistence.*;
 import java.util.*;
 
@@ -21,7 +23,7 @@ public class Flight {
     private String flightNumber;
     private String airlane;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.REMOVE)
     @JoinTable(
             name="flight_passenger",
             joinColumns = @JoinColumn(name="flight_id"),
@@ -36,6 +38,14 @@ public class Flight {
         this.totalSeats = totalSeats;
         this.flightNumber = flightNumber;
         this.airlane = airlane;
+    }
+
+    public Flight(String destination, String totalSeats, String flightNumber, String airlane, Set<Passenger> passengers) {
+        this.destination = destination;
+        this.totalSeats = totalSeats;
+        this.flightNumber = flightNumber;
+        this.airlane = airlane;
+        this.passengers = passengers;
     }
 
     public int getId() {
@@ -94,5 +104,17 @@ public class Flight {
     public void removePassenger(Passenger passenger) {
         passengers.remove(passenger);
         passenger.getFlights().remove(this);
+    }
+
+    @Override
+    public String toString() {
+        return "Flight{" +
+                "id=" + id +
+                ", destination='" + destination + '\'' +
+                ", totalSeats='" + totalSeats + '\'' +
+                ", flightNumber='" + flightNumber + '\'' +
+                ", airlane='" + airlane + '\'' +
+                ", passengers=" + passengers +
+                '}';
     }
 }

@@ -1,7 +1,5 @@
 package dao;
-
 import entities.Passenger;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -14,27 +12,42 @@ public class PassengerDAO {
     public void persistPassenger(Passenger passenger){
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
-        System.out.println("");
         entityManager.persist(passenger);
-
         entityManager.getTransaction().commit();
         entityManager.close();
+
     }
 
     public List<Passenger> getAllPassengers(){
 
         EntityManager entityManager = entityManagerFactory.createEntityManager();
 
-        List<Passenger> passports = (List<Passenger>) entityManager.createNamedQuery("Passenger.findAll").getResultList();
+        List<Passenger> passengers = (List<Passenger>) entityManager.createNamedQuery("Passenger.findAll").getResultList();
         entityManager.close();
-        return passports;
+        return passengers;
     }
 
-    public void removePassenger(Passenger passenger){
+    public void mergePassenger(Passenger passengerToEdit){
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
+
+        entityManager.merge(passengerToEdit);
+        System.out.println("Your passport number was successfuly updated to: "+passengerToEdit.toString());
+        System.out.println("====================================================================");
+
+        entityManager.getTransaction().commit();
+        entityManager.close();
+    }
+
+    public void removePassenger(Passenger passengerToRemove){
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+
+        entityManager.remove(entityManager.merge(passengerToRemove));
+        System.out.println(passengerToRemove.toString() + " was removed!");
         System.out.println();
-        entityManager.remove(entityManager.merge(passenger));
+        System.out.println("==========================================================================");
+
         entityManager.getTransaction().commit();
         entityManager.close();
     }

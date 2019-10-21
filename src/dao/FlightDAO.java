@@ -13,9 +13,8 @@ public class FlightDAO {
     public void persistFlight(Flight flight){
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
-
         entityManager.persist(flight);
-
+        System.out.println("Persisted");
         entityManager.getTransaction().commit();
         entityManager.close();
     }
@@ -31,15 +30,27 @@ public class FlightDAO {
         return flight;
     }
 
-    public void mergeFlight(Flight flight, String flightNumber){
+    public void mergeFlight(Flight flightToUpdate){
         EntityManager entityManager = entityManagerFactory.createEntityManager();
-
-
-        flight = (Flight) entityManager.createNamedQuery("Flight.findByFlightNumber").setParameter("flightNumber", flightNumber).getSingleResult();
-
-        entityManager.detach(flight);
         entityManager.getTransaction().begin();
-        entityManager.merge(flight);
+
+        entityManager.merge(flightToUpdate);
+        System.out.println(flightToUpdate.toString()+" updated with success!");
+        System.out.println("#####################################################");
+
+        entityManager.getTransaction().commit();
+        entityManager.close();
+    }
+
+    public void removeFlight(Flight flightToRemove){
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+
+        entityManager.remove(entityManager.merge(flightToRemove));
+        System.out.println(flightToRemove.toString()+" removed with success!");
+        System.out.println();
+        System.out.println("=======================================================");
+
         entityManager.getTransaction().commit();
         entityManager.close();
     }

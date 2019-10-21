@@ -1,6 +1,7 @@
 package entities;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
 
 @NamedQueries({
         @NamedQuery(name = "Passport.findAll",                  query = "select p from Passport p"),
@@ -13,7 +14,6 @@ public class Passport {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
     private String firstName;
     private String lastName;
     private String nationality;
